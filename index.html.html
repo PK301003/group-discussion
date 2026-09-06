@@ -1,0 +1,304 @@
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#0f1630;--navy2:#151d3a;
+  --gold:#c9a84c;--gold2:#f0d080;--gold3:#a07830;
+  --teal:#1ab3b3;
+  --white:#ffffff;
+  --t1:#f0f4ff;--t2:#a0aed0;--t3:#606890;
+  --bdr:rgba(255,255,255,.1);
+}
+h2.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+
+#root{
+  background:linear-gradient(145deg,var(--navy) 0%,var(--navy2) 55%,#0d1e40 100%);
+  border-radius:18px;overflow:hidden;position:relative;min-height:580px;
+}
+
+.orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px)}
+.o1{width:300px;height:300px;background:rgba(201,168,76,.07);top:-80px;right:-60px}
+.o2{width:220px;height:220px;background:rgba(26,179,179,.06);bottom:-50px;left:-50px}
+
+/* ── shared slide shell ── */
+.slide{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;
+  padding:2.8rem 1.5rem 2.2rem;gap:1.4rem;
+  overflow-y:auto;
+  transition:opacity .4s ease,transform .4s cubic-bezier(.4,0,.2,1);
+}
+.slide.hidden{opacity:0;pointer-events:none;transform:translateY(12px)}
+.slide.gone{display:none}
+
+/* ── SLIDE 1 ── */
+.eyebrow{font-size:11px;font-weight:500;letter-spacing:.2em;color:var(--t3);text-transform:uppercase}
+.main-title{font-size:clamp(26px,5vw,40px);font-weight:800;color:var(--white);text-align:center;letter-spacing:-.025em;line-height:1.1}
+.rule{width:40px;height:2px;background:linear-gradient(90deg,var(--gold),var(--teal));border-radius:2px}
+.sub{font-size:14px;color:var(--t2);text-align:center;max-width:380px;line-height:1.65}
+
+.mystery-card{
+  width:100%;max-width:480px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;padding:2.2rem 2rem 1.8rem;
+  position:relative;overflow:hidden;
+  cursor:pointer;
+  transition:transform .3s,border-color .3s,background .3s;
+}
+.mystery-card:hover{transform:translateY(-5px);border-color:rgba(201,168,76,.3);background:rgba(255,255,255,.06)}
+.mystery-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 50%,rgba(201,168,76,.06),transparent 60%);
+  opacity:0;transition:opacity .3s
+}
+.mystery-card:hover::before{opacity:1}
+
+.mc-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(201,168,76,.1);border:0.5px solid rgba(201,168,76,.2);
+  border-radius:50px;padding:.3rem .9rem;
+  font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--gold2);
+  text-transform:uppercase;margin-bottom:1.2rem
+}
+.mc-mystery{
+  display:flex;align-items:center;justify-content:center;
+  gap:12px;margin-bottom:1.2rem
+}
+.mc-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:rgba(255,255,255,.15);
+  animation:pulse 2s ease-in-out infinite;
+}
+.mc-dot:nth-child(2){animation-delay:.3s}
+.mc-dot:nth-child(3){animation-delay:.6s}
+@keyframes pulse{0%,100%{opacity:.3;transform:scale(.9)}50%{opacity:.8;transform:scale(1.1)}}
+
+.mc-hint{font-size:13px;color:var(--t3);text-align:center;line-height:1.6;margin-bottom:1.6rem;font-style:italic}
+
+.sel-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--gold),var(--gold3));
+  color:#1a0e00;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  border:none;border-radius:50px;padding:.8rem 1.9rem;cursor:pointer;
+  transition:transform .2s;position:relative;z-index:1
+}
+.sel-btn:hover{transform:scale(1.05)}
+.sel-btn i{font-size:15px}
+
+.badge-row{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;justify-content:center}
+.pip{font-size:11px;color:var(--t3);letter-spacing:.04em}
+.pip b{color:var(--gold);font-weight:600}
+.pip-dot{width:3px;height:3px;border-radius:50%;background:var(--t3)}
+
+/* ── SLIDE 2 ── */
+.hero-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(26,179,179,.12);border:0.5px solid rgba(26,179,179,.25);
+  border-radius:50px;padding:.3rem .9rem;
+  font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--teal);
+  text-transform:uppercase
+}
+.topic-num{font-size:11px;font-weight:600;letter-spacing:.16em;color:var(--gold);text-transform:uppercase}
+.topic-big{font-size:clamp(22px,5vw,36px);font-weight:900;color:var(--white);text-align:center;letter-spacing:-.025em;line-height:1.1}
+.topic-sub{font-size:13.5px;color:var(--t2);text-align:center;max-width:480px;line-height:1.65}
+
+.info-card{
+  width:100%;max-width:520px;
+  background:rgba(255,255,255,.04);border:0.5px solid rgba(255,255,255,.1);
+  border-left:3px solid var(--gold);border-radius:14px;padding:1.2rem 1.4rem
+}
+.sec-lbl{font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--t3);text-transform:uppercase;margin-bottom:.5rem}
+.info-text{font-size:13.5px;color:var(--t2);line-height:1.7}
+
+.resp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.6rem;width:100%;max-width:520px}
+.rc{
+  background:rgba(255,255,255,.04);border:0.5px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:.85rem;
+  transition:transform .25s,border-color .25s;
+  animation:fadeUp .45s ease both
+}
+.rc:hover{transform:translateY(-3px);border-color:rgba(26,179,179,.3)}
+.rc:nth-child(1){animation-delay:.04s}.rc:nth-child(2){animation-delay:.09s}
+.rc:nth-child(3){animation-delay:.14s}.rc:nth-child(4){animation-delay:.19s}
+.rc:nth-child(5){animation-delay:.24s}
+.rc-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:.6rem}
+.i-gold{background:rgba(201,168,76,.13);color:var(--gold)}
+.i-teal{background:rgba(26,179,179,.13);color:var(--teal)}
+.i-blue{background:rgba(80,120,220,.13);color:#7090e0}
+.i-red{background:rgba(200,80,80,.13);color:#d07070}
+.i-green{background:rgba(80,180,80,.13);color:#60b060}
+.rc-title{font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--t1);text-transform:uppercase;margin-bottom:.3rem}
+.rc-desc{font-size:11.5px;color:var(--t3);line-height:1.5}
+
+.bq-card{
+  width:100%;max-width:520px;
+  background:rgba(255,255,255,.03);border:0.5px solid rgba(201,168,76,.2);
+  border-radius:16px;padding:1.5rem 1.4rem;text-align:center
+}
+.bq-q{font-size:clamp(13px,2.5vw,16px);font-weight:700;color:var(--white);line-height:1.45;margin-bottom:.55rem}
+.bq-hint{font-size:12.5px;color:var(--t3);line-height:1.55}
+
+.action-row{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center;width:100%;max-width:520px}
+.btn-debate{
+  flex:1;min-width:180px;
+  background:linear-gradient(135deg,var(--gold),var(--gold3));
+  color:#1a0e00;font-size:12.5px;font-weight:800;letter-spacing:.06em;
+  border:none;border-radius:50px;padding:.85rem 1.5rem;cursor:pointer;
+  transition:transform .2s;display:flex;align-items:center;justify-content:center;gap:7px
+}
+.btn-debate:hover{transform:scale(1.04)}
+.btn-back{
+  flex:1;min-width:140px;background:transparent;
+  border:0.5px solid rgba(255,255,255,.15);color:var(--t2);
+  font-size:12.5px;font-weight:500;border-radius:50px;padding:.85rem 1.5rem;
+  cursor:pointer;transition:background .2s,border-color .2s;
+  display:flex;align-items:center;justify-content:center;gap:6px
+}
+.btn-back:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.28)}
+
+.toast-wrap{width:100%;max-width:520px}
+.toast{
+  background:rgba(10,50,35,.85);border:0.5px solid rgba(26,179,179,.3);
+  border-radius:12px;padding:.9rem 1.1rem;
+  display:flex;gap:10px;align-items:center;animation:fadeUp .35s ease
+}
+.toast-icon{width:26px;height:26px;border-radius:50%;background:rgba(26,179,179,.2);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;color:var(--teal)}
+.toast-text{font-size:13px;color:#a0e0d0;line-height:1.5}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+</style>
+
+<div id="root">
+  <h2 class="sr-only">Group discussion — two-slide topic reveal</h2>
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+
+  <!-- ── SLIDE 1: Selection only ── -->
+  <div class="slide" id="s1">
+    <div class="eyebrow">Today's group discussion</div>
+    <div class="main-title">Choose your topic</div>
+    <div class="rule"></div>
+    <div class="sub">Pick a topic, explore the perspective, and get ready to share your thoughts.</div>
+
+    <div class="mystery-card" id="mCard" role="button" tabindex="0" aria-label="Select the group discussion topic">
+      <div class="mc-tag"><i class="ti ti-lock" aria-hidden="true" style="font-size:12px"></i> Topic 01</div>
+      <div class="mc-mystery">
+        <div class="mc-dot"></div>
+        <div class="mc-dot"></div>
+        <div class="mc-dot"></div>
+      </div>
+      <div class="mc-hint">"Click to reveal today's discussion topic and get started."</div>
+      <button class="sel-btn" id="selBtn" aria-label="Reveal and select topic">
+        <i class="ti ti-arrow-right" aria-hidden="true"></i> Select topic
+      </button>
+    </div>
+
+    <div class="badge-row">
+      <div class="pip"><b>1</b> topic</div>
+      <div class="pip-dot"></div>
+      <div class="pip"><b>1</b> discussion</div>
+      <div class="pip-dot"></div>
+      <div class="pip">your perspective</div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 2: Full topic reveal ── -->
+  <div class="slide hidden gone" id="s2">
+    <div class="hero-pill"><i class="ti ti-check" aria-hidden="true" style="font-size:12px"></i> Topic revealed</div>
+    <div class="topic-num">Topic 01</div>
+    <div class="topic-big">Is job loyalty dead?</div>
+    <div class="rule"></div>
+    <div class="topic-sub">Should employees stay with one company for the long term, or move when better opportunities come along?</div>
+
+    <div class="info-card">
+      <div class="sec-lbl">What is this topic about?</div>
+      <div class="info-text">Job loyalty is about the relationship between employees and the organizations they work for. Some believe staying builds trust, stability, and long-term growth. Others believe employees should explore new opportunities when they offer better pay, growth, or challenge.</div>
+    </div>
+
+    <div class="sec-lbl" style="width:100%;max-width:520px">Your responsibilities</div>
+    <div class="resp-grid">
+      <div class="rc">
+        <div class="rc-icon i-gold"><i class="ti ti-messages" aria-hidden="true"></i></div>
+        <div class="rc-title">Share your view</div>
+        <div class="rc-desc">Tell us what you personally think about the topic.</div>
+      </div>
+      <div class="rc">
+        <div class="rc-icon i-teal"><i class="ti ti-bulb" aria-hidden="true"></i></div>
+        <div class="rc-title">Give your reasons</div>
+        <div class="rc-desc">Explain why you support your opinion.</div>
+      </div>
+      <div class="rc">
+        <div class="rc-icon i-blue"><i class="ti ti-ear" aria-hidden="true"></i></div>
+        <div class="rc-title">Listen to others</div>
+        <div class="rc-desc">Understand different opinions, even when you disagree.</div>
+      </div>
+      <div class="rc">
+        <div class="rc-icon i-red"><i class="ti ti-sword" aria-hidden="true"></i></div>
+        <div class="rc-title">Challenge respectfully</div>
+        <div class="rc-desc">Question ideas without attacking people.</div>
+      </div>
+      <div class="rc">
+        <div class="rc-icon i-green"><i class="ti ti-refresh" aria-hidden="true"></i></div>
+        <div class="rc-title">Be open-minded</div>
+        <div class="rc-desc">Be willing to rethink when you hear a strong argument.</div>
+      </div>
+    </div>
+
+    <div class="bq-card">
+      <div class="bq-q">If a better opportunity comes along, should loyalty keep you from taking it?</div>
+      <div class="bq-hint">No right or wrong answer — the goal is to understand different perspectives.</div>
+    </div>
+
+    <div class="toast-wrap" id="toastArea"></div>
+
+    <div class="action-row">
+      <button class="btn-debate" id="debateBtn">
+        <i class="ti ti-flame" aria-hidden="true"></i> I'm ready to debate
+      </button>
+      <button class="btn-back" id="backBtn">
+        <i class="ti ti-arrow-left" aria-hidden="true"></i> Back to topic
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+const s1=document.getElementById('s1');
+const s2=document.getElementById('s2');
+
+function goS2(){
+  s1.classList.add('hidden');
+  setTimeout(()=>{
+    s1.classList.add('gone');
+    s2.classList.remove('gone');
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      s2.classList.remove('hidden');
+      s2.scrollTop=0;
+      document.getElementById('toastArea').innerHTML='';
+    }));
+  },380);
+}
+
+function goS1(){
+  s2.classList.add('hidden');
+  setTimeout(()=>{
+    s2.classList.add('gone');
+    s1.classList.remove('gone');
+    requestAnimationFrame(()=>requestAnimationFrame(()=>s1.classList.remove('hidden')));
+  },380);
+  document.getElementById('toastArea').innerHTML='';
+}
+
+document.getElementById('selBtn').addEventListener('click',e=>{e.stopPropagation();goS2()});
+document.getElementById('mCard').addEventListener('click',goS2);
+document.getElementById('mCard').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')goS2()});
+document.getElementById('backBtn').addEventListener('click',goS1);
+document.getElementById('debateBtn').addEventListener('click',()=>{
+  const a=document.getElementById('toastArea');
+  if(a.querySelector('.toast'))return;
+  a.innerHTML=`<div class="toast"><div class="toast-icon"><i class="ti ti-check" aria-hidden="true"></i></div><div class="toast-text"><strong style="color:#c0f0e0">Ready!</strong> Bring your opinion, support your argument, and be prepared to hear the other side.</div></div>`;
+  a.scrollIntoView({behavior:'smooth',block:'nearest'});
+});
+</script>
